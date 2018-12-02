@@ -2,6 +2,8 @@ import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as path from 'path';
 
+import { getResult } from './calculator/calculator.controller';
+
 const app = express();
 dotenv.load({ path: '.env' });
 app.set('port', (process.env.PORT || 3001));
@@ -11,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const router = express.Router();
-router.route('/').get((req, res) => res.status(200).json({ 'data': { 'result': 'Hello World' }}));
+router.route('/calculator').get(getResult);
 app.use('/api', router);
 
 app.get('/*', function(req, res) {

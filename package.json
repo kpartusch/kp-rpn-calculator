@@ -8,6 +8,7 @@
     "predev": "tsc -p server",
     "build": "ng build",
     "test": "ng test",
+    "test-server": "tsc -p server && mocha dist/server/**/*.spec.js --exit",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
