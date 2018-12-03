@@ -2,7 +2,8 @@ import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as path from 'path';
 
-import { getResult } from './calculator/calculator.controller';
+import { getCalculatorResult } from './calculator/calculator.controller';
+import { validateGetCalculatorResult } from './calculator/calculator.validation';
 
 const app = express();
 dotenv.load({ path: '.env' });
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const router = express.Router();
-router.route('/calculator').get(getResult);
+router.route('/calculator').get(validateGetCalculatorResult(), getCalculatorResult);
 app.use('/api', router);
 
 app.get('/*', function(req, res) {
