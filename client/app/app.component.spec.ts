@@ -1,11 +1,16 @@
 import { TestBed, async } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
+import { MockCalculatorComponent } from './calculator/mock-calculator.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MatCardModule ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockCalculatorComponent
       ],
     }).compileComponents();
   }));
@@ -20,12 +25,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('kp-rpn-calculator');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to kp-rpn-calculator!');
   });
 });
