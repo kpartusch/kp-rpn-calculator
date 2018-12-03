@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "server-start": "node dist/server/app.js",
+    "start-server": "node dist/server/app.js",
     "predev": "tsc -p server",
     "build": "ng build",
     "test": "ng test",

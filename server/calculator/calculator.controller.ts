@@ -9,7 +9,16 @@ export function getCalculatorResult(req: Request, res: Response) {
   const inputs = <string[]>req.body.inputs;
   const stack: number[] = [];
   inputs.forEach((value) => {
-    if (['+', '-', '*', '/'].includes(value)) {
+    if (value === '%') {
+      // percentage functions do not cause stack drop
+      const operand_x = stack.pop();
+      let percentageResult = evaluate(operand_x, null, value);
+      if (stack.length > 0) {
+        const operand_y = stack[stack.length - 1];
+        percentageResult = operand_y * percentageResult;
+      }
+      stack.push(percentageResult);
+    } else if (['+', '-', '*', '/'].includes(value)) {
       // two number functions cause stack drop
       const operand_x = stack.pop();
       const operand_y = stack.pop();
@@ -37,5 +46,7 @@ function evaluate(leftOperand: number, rightOperand: number, operator: string): 
       return leftOperand * rightOperand;
     case '/':
       return leftOperand / rightOperand;
+    case '%':
+      return leftOperand / 100;
   }
 }

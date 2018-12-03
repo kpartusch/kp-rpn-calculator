@@ -58,7 +58,7 @@ describe('Calculator Controller', () => {
         });
     });
 
-    it('should calculate a result when division', done => {
+    it('should calculate a result when division', (done) => {
       firstOperand = 14;
       secondOperand = 2;
       chai.request(app)
@@ -81,6 +81,31 @@ describe('Calculator Controller', () => {
           res.body.should.be.a('object');
           res.body.should.have.a.property('errors')
             .eql([{message: 'inputs provided do not represent a valid postfix (RPN) expression'}]);
+          done();
+        });
+    });
+  });
+
+  describe('percentage functions', () => {
+    it('should calculate a result when two numbers present', (done) => {
+      firstOperand = 50;
+      secondOperand = 10;
+      chai.request(app)
+        .get(endPointUrl)
+        .send({inputs: [firstOperand.toString(), secondOperand.toString(), '%']})
+        .end((err, res) => {
+          assertSuccessResponse(res, firstOperand * (secondOperand / 100));
+          done();
+        });
+    });
+
+    it('should calculate a result when one number present', (done) => {
+      firstOperand = 50;
+      chai.request(app)
+        .get(endPointUrl)
+        .send({inputs: [firstOperand.toString(), '%']})
+        .end((err, res) => {
+          assertSuccessResponse(res, (firstOperand / 100));
           done();
         });
     });
