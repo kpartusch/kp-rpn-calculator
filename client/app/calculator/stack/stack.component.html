@@ -1,0 +1,10 @@
+<mat-list class="calculator-stack">
+  <mat-list-item *ngFor="let entry of entries">
+    <span>{{entry.value}}</span>
+    <mat-divider [inset]="false"></mat-divider>
+  </mat-list-item>
+  <mat-list-item>
+    <span>{{result}}</span>
+    <mat-divider [inset]="true"></mat-divider>
+  </mat-list-item>
+</mat-list>

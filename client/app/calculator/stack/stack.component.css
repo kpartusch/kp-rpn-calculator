@@ -1,0 +1,12 @@
+.calculator-stack {
+  height: 156px;
+  overflow-y: scroll;
+}
+
+.calculator-stack.mat-list-base {
+  padding-top: 0;
+}
+
+.calculator-stack .mat-list-item-content {
+  justify-content: flex-end;
+}
