@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalculatorComponent } from './calculator.component';
 import { MockStackComponent } from './stack/mock-stack.component';
+import { MockButtonsComponent } from './buttons/mock-buttons.component';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorComponent;
@@ -11,7 +12,8 @@ describe('CalculatorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CalculatorComponent,
-        MockStackComponent
+        MockStackComponent,
+        MockButtonsComponent
       ]
     })
     .compileComponents();

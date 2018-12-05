@@ -1,0 +1,25 @@
+.calc-button {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  border-radius: 0;
+}
+
+.calc-button.action {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.calc-button.secondary {
+  background-color: #757575;
+  color: white;
+}
+
+.calc-button.primary {
+  background-color: #ff9800;
+  color: white;
+}
+
+app-calculator-buttons > mat-grid-list:first-of-type {
+  margin-bottom: 1px;
+}
