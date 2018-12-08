@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDividerModule, MatListModule } from '@angular/material';
 
 import { StackComponent } from './stack.component';
+import {By} from '@angular/platform-browser';
 
 describe('StackComponent', () => {
   let component: StackComponent;
@@ -33,7 +34,15 @@ describe('StackComponent', () => {
     expect(component.entries.length).toEqual(2);
   });
 
-  it('should have zero result', () => {
-    expect(component.result).toBe('0');
+  it('should have result', () => {
+    const expectedResult = '890.0';
+    const resultSpan = fixture.debugElement.query(By.css('mat-list-item:last-of-type span'));
+
+    expect(resultSpan.nativeElement.textContent).toBe('0');
+
+    component.result = expectedResult;
+    fixture.detectChanges();
+
+    expect(resultSpan.nativeElement.textContent).toBe(expectedResult);
   });
 });

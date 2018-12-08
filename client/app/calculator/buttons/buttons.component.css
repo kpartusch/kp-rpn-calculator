@@ -23,3 +23,7 @@
 app-calculator-buttons > mat-grid-list:first-of-type {
   margin-bottom: 1px;
 }
+
+app-calculator-buttons .mat-button .mat-button-wrapper > sup {
+  vertical-align: super;
+}

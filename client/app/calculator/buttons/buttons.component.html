@@ -14,10 +14,10 @@
 </mat-grid-list>
 <mat-grid-list cols="4" rowHeight="48px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button secondary" mat-button type="button">{{hasResult ? 'C' : 'AC'}}</button>
+    <button id="clear-button" class="calc-button secondary" mat-button type="button">{{hasResult ? 'C' : 'AC'}}</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button secondary" mat-button type="button">+/-</button>
+    <button class="calc-button secondary" mat-button type="button"><sup>&#43;</sup>&#47;<sub>&#8722;</sub></button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button secondary" mat-button type="button">%</button>
@@ -26,43 +26,43 @@
     <button class="calc-button primary" mat-button type="button">&#247;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">7</button>
+    <button class="calc-button action" (click)="operand('7')" mat-button type="button">7</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">8</button>
+    <button class="calc-button action" (click)="operand('8')" mat-button type="button">8</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">9</button>
+    <button class="calc-button action" (click)="operand('9')" mat-button type="button">9</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">x</button>
+    <button class="calc-button primary" mat-button type="button">&#215;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">4</button>
+    <button class="calc-button action" (click)="operand('4')" mat-button type="button">4</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">5</button>
+    <button class="calc-button action" (click)="operand('5')" mat-button type="button">5</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">6</button>
+    <button class="calc-button action" (click)="operand('6')" mat-button type="button">6</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">-</button>
+    <button class="calc-button primary" mat-button type="button">&#8722;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">1</button>
+    <button class="calc-button action" (click)="operand('1')" mat-button type="button">1</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">2</button>
+    <button class="calc-button action" (click)="operand('2')" mat-button type="button">2</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">3</button>
+    <button class="calc-button action" (click)="operand('3')" mat-button type="button">3</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">+</button>
+    <button class="calc-button primary" mat-button type="button">&#43;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">0</button>
+    <button class="calc-button action" (click)="operand('0')" mat-button type="button">0</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button action" mat-button type="button">.</button>

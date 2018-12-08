@@ -1,2 +1,2 @@
-<app-calculator-stack></app-calculator-stack>
-<app-calculator-buttons [hasResult]="hasResult"></app-calculator-buttons>
+<app-calculator-stack [result]="result"></app-calculator-stack>
+<app-calculator-buttons [hasResult]="hasResult" (operandEntered)="processOperand($event)"></app-calculator-buttons>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-calculator-buttons',
@@ -10,9 +10,15 @@ export class ButtonsComponent implements OnInit {
 
   @Input() hasResult: boolean;
 
+  @Output() operandEntered = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public operand(value: string): void {
+    this.operandEntered.emit(value);
   }
 
 }

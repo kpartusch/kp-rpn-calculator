@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { Operand } from '../operand';
 
@@ -11,7 +11,9 @@ import { Operand } from '../operand';
 export class StackComponent implements OnInit {
   private operandStack: Operand[] = [];
 
+  @Input()
   public result = '0';
+
   public get entries(): Operand[] {
     const entries = Object.assign([], this.operandStack);
     while (entries.length < 2) {
