@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { ButtonsComponent } from './buttons.component';
 import { EnterAction } from '../enter-action';
+import { SwapAction } from '../actions/swap-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -62,5 +63,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.enter();
+  });
+
+  it('should emit action when swap clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof SwapAction).toBeTruthy();
+      done();
+    });
+
+    component.swap();
   });
 });

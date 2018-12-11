@@ -1,6 +1,6 @@
 <mat-grid-list cols="4" rowHeight="36px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">x<mat-icon inline="true">swap_horiz</mat-icon>y</button>
+    <button class="calc-button action" (click)="swap()" mat-button type="button">x<mat-icon inline="true">swap_horiz</mat-icon>y</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button action" mat-button type="button">R<mat-icon inline="true">arrow_downward</mat-icon></button>
