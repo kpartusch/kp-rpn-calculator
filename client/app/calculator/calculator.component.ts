@@ -48,6 +48,10 @@ export class CalculatorComponent implements OnInit {
     const context = new CalculatorContext(this._result, this.operandStack.getValue());
     const actionResult = action.execute(context);
 
+    if (actionResult.result) {
+      this._result = actionResult.result;
+    }
+
     if (actionResult.reset) {
       this.resetResult(actionResult.resetResult);
     }

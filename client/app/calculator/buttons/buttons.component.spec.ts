@@ -3,6 +3,7 @@ import { MatGridListModule, MatIconModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 
 import { ButtonsComponent } from './buttons.component';
+import { EnterAction } from '../enter-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -40,17 +41,26 @@ describe('ButtonsComponent', () => {
     component.operand(expectedOperand);
   });
 
-  it('should have all clear text', () => {
+  it('should have all clear text when has no result', () => {
     const clearButton = fixture.debugElement.query(By.css('#clear-button'));
     expect(clearButton.nativeElement.textContent).toBe('AC');
   });
 
-  it('should have clear text', () => {
+  it('should have clear text when has result', () => {
     const clearButton = fixture.debugElement.query(By.css('#clear-button'));
     component.hasResult = true;
 
     fixture.detectChanges();
 
     expect(clearButton.nativeElement.textContent).toBe('C');
+  });
+
+  it('should emit action when enter clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof EnterAction).toBeTruthy();
+      done();
+    });
+
+    component.enter();
   });
 });

@@ -68,6 +68,6 @@
     <button class="calc-button action" mat-button type="button">.</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">enter</button>
+    <button class="calc-button primary" (click)="enter()" mat-button type="button">enter</button>
   </mat-grid-tile>
 </mat-grid-list>
