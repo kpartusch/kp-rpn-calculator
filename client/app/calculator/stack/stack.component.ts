@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { Operand } from '../operand';
+import { Operand } from '../models/operand';
 
 @Component({
   selector: 'app-calculator-stack',
@@ -9,13 +9,14 @@ import { Operand } from '../operand';
   encapsulation: ViewEncapsulation.None
 })
 export class StackComponent implements OnInit {
-  private operandStack: Operand[] = [];
+  @Input()
+  public stack: Operand[];
 
   @Input()
   public result = '0';
 
   public get entries(): Operand[] {
-    const entries = Object.assign([], this.operandStack);
+    const entries = Object.assign([], this.stack);
     while (entries.length < 2) {
       entries.unshift(<Operand>{value: ''});
     }
