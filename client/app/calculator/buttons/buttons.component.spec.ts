@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ButtonsComponent } from './buttons.component';
 import { EnterAction } from '../enter-action';
 import { SwapAction } from '../actions/swap-action';
+import { PullDownAction } from '../actions/pull-down-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -72,5 +73,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.swap();
+  });
+
+  it('should emit action when pull down clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof PullDownAction).toBeTruthy();
+      done();
+    });
+
+    component.pullDown();
   });
 });

@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { CalculatorAction } from '../models/calculator-action';
 import { EnterAction } from '../enter-action';
 import { SwapAction } from '../actions/swap-action';
+import { PullDownAction } from '../actions/pull-down-action';
 
 @Component({
   selector: 'app-calculator-buttons',
@@ -33,6 +34,10 @@ export class ButtonsComponent implements OnInit {
 
   public swap(): void {
     this.actionEntered.emit(new SwapAction());
+  }
+
+  public pullDown(): void {
+    this.actionEntered.emit(new PullDownAction());
   }
 
 }
