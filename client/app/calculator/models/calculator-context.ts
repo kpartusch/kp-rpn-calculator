@@ -9,10 +9,14 @@ export class CalculatorContext {
   public get stack(): Operand[] {
     return this._stack;
   }
-  private readonly _stack: Operand[];
+  private _stack: Operand[];
 
   constructor(result: string, stack: Operand[]) {
     this._result = result;
     this._stack = stack;
+  }
+
+  public clearStack(): void {
+    this._stack = [];
   }
 }

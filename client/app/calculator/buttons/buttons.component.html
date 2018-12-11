@@ -14,7 +14,7 @@
 </mat-grid-list>
 <mat-grid-list cols="4" rowHeight="48px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button id="clear-button" class="calc-button secondary" mat-button type="button">{{hasResult ? 'C' : 'AC'}}</button>
+    <button id="clear-button" class="calc-button secondary" (click)="allClear()" mat-button type="button">{{hasResult ? 'C' : 'AC'}}</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button secondary" mat-button type="button"><sup>&#43;</sup>&#47;<sub>&#8722;</sub></button>

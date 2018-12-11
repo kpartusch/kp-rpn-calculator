@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { skip, take } from 'rxjs/operators';
 
 import { CalculatorComponent } from './calculator.component';
 import { MockStackComponent } from './stack/mock-stack.component';
@@ -6,6 +7,7 @@ import { MockButtonsComponent } from './buttons/mock-buttons.component';
 import { CalculatorAction } from './models/calculator-action';
 import { CalculatorContext } from './models/calculator-context';
 import { ProcessActionResult } from './models/process-action-result';
+import { Operand } from './models/operand';
 
 class TestUpdateResultAction implements CalculatorAction {
   public result: string;
@@ -21,6 +23,32 @@ class TestResetAction implements CalculatorAction {
 
   execute(context: CalculatorContext): ProcessActionResult {
     return new ProcessActionResult(undefined, this.reset, this.resetResult);
+  }
+}
+
+class TestClearStackAction implements CalculatorAction {
+  public stack: Operand[];
+
+  execute(context: CalculatorContext): ProcessActionResult {
+    context.clearStack();
+    return new ProcessActionResult();
+  }
+}
+
+type TestUpdateStackFn = (stack: Operand[]) => void;
+
+class TestUpdateStackAction implements CalculatorAction {
+  private readonly _updateFn: TestUpdateStackFn;
+
+  constructor(updateFn: TestUpdateStackFn) {
+    this._updateFn = updateFn;
+  }
+
+  execute(context: CalculatorContext): ProcessActionResult {
+    if (this._updateFn) {
+      this._updateFn(context.stack);
+    }
+    return new ProcessActionResult();
   }
 }
 
@@ -160,6 +188,49 @@ describe('CalculatorComponent', () => {
       component.processAction(expectedActionResult);
 
       expect(component.result).toBe(defaultResultValue);
+    });
+
+    it('should set stack to value from action result', (done: DoneFn) => {
+      const expectedFirstOperand = <Operand>{value: '23'};
+      const expectedActionResult = new TestUpdateStackAction((stack) => stack.push(expectedFirstOperand));
+
+      // Verifying the stack is empty for the first subscription result
+      component.stack$.pipe(take(1)).subscribe(stack => {
+        expect(stack.length).toBe(0);
+      });
+
+      // Verifying the stack has the value add during action
+      component.stack$.pipe(skip(1), take(1)).subscribe(stack => {
+        expect(stack.length).toBe(1);
+        expect(stack[0]).toEqual(expectedFirstOperand);
+        done();
+      });
+
+      component.processAction(expectedActionResult);
+    });
+
+    it('should set stack from clear action result', (done: DoneFn) => {
+      const clearActionResult = new TestClearStackAction();
+      const updateActionResult = new TestUpdateStackAction((stack) => stack.push(<Operand>{value: '23'}));
+
+      // Verifying the stack is empty for the first subscription result
+      component.stack$.pipe(take(1)).subscribe(stack => {
+        expect(stack.length).toBe(0);
+      });
+
+      // Verifying the stack has the value add during action
+      component.stack$.pipe(skip(1), take(1)).subscribe(stack => {
+        expect(stack.length).toBe(1);
+      });
+
+      // Verifying the stack has the value cleared during action
+      component.stack$.pipe(skip(2), take(1)).subscribe(stack => {
+        expect(stack.length).toBe(0);
+        done();
+      });
+
+      component.processAction(updateActionResult);
+      component.processAction(clearActionResult);
     });
   });
 });

@@ -8,6 +8,7 @@ import { SwapAction } from '../actions/swap-action';
 import { PullDownAction } from '../actions/pull-down-action';
 import { PushUpAction } from '../actions/push-up-action';
 import { DropAction } from '../actions/drop-action';
+import { AllClearAction } from '../actions/all-clear-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -102,5 +103,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.drop();
+  });
+
+  it('should emit action when all clear clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof AllClearAction).toBeTruthy();
+      done();
+    });
+
+    component.allClear();
   });
 });
