@@ -9,7 +9,7 @@
     <button class="calc-button action" (click)="pushUp()" mat-button type="button">R<mat-icon inline="true">arrow_upward</mat-icon></button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">drop</button>
+    <button class="calc-button action" (click)="drop()" mat-button type="button">drop</button>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list cols="4" rowHeight="48px">

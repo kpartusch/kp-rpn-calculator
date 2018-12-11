@@ -5,6 +5,7 @@ import { EnterAction } from '../enter-action';
 import { SwapAction } from '../actions/swap-action';
 import { PullDownAction } from '../actions/pull-down-action';
 import { PushUpAction } from '../actions/push-up-action';
+import { DropAction } from '../actions/drop-action';
 
 @Component({
   selector: 'app-calculator-buttons',
@@ -43,5 +44,9 @@ export class ButtonsComponent implements OnInit {
 
   public pushUp(): void {
     this.actionEntered.emit(new PushUpAction());
+  }
+
+  public drop(): void {
+    this.actionEntered.emit(new DropAction());
   }
 }
