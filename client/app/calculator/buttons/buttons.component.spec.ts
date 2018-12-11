@@ -6,6 +6,7 @@ import { ButtonsComponent } from './buttons.component';
 import { EnterAction } from '../enter-action';
 import { SwapAction } from '../actions/swap-action';
 import { PullDownAction } from '../actions/pull-down-action';
+import { PushUpAction } from '../actions/push-up-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -82,5 +83,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.pullDown();
+  });
+
+  it('should emit action when push up clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof PushUpAction).toBeTruthy();
+      done();
+    });
+
+    component.pushUp();
   });
 });
