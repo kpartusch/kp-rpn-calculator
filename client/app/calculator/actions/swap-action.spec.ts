@@ -2,6 +2,7 @@ import { SwapAction } from './swap-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('SwapAction', () => {
   let action: CalculatorAction;
@@ -17,7 +18,7 @@ describe('SwapAction', () => {
     const expectedResult = '56';
     const expectedOperand = <Operand>{ value: '19' };
     stack.push(<Operand>{ value: expectedResult });
-    context = new CalculatorContext(expectedOperand.value, stack);
+    context = new CalculatorContextBuilder().setResult(expectedOperand.value).setStack(stack).build();
 
     const actionResult = action.execute(context);
 
@@ -29,7 +30,7 @@ describe('SwapAction', () => {
   });
 
   it('should have default result when stack empty', () => {
-    context = new CalculatorContext('19', stack);
+    context = new CalculatorContextBuilder().setResult('19').setStack(stack).build();
 
     const actionResult = action.execute(context);
 

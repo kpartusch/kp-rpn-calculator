@@ -1,7 +1,8 @@
 import { EnterAction } from './enter-action';
-import { CalculatorAction } from './models/calculator-action';
-import { CalculatorContext } from './models/calculator-context';
-import { Operand } from './models/operand';
+import { CalculatorAction } from '../models/calculator-action';
+import { CalculatorContext } from '../models/calculator-context';
+import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('EnterAction', () => {
   let action: CalculatorAction;
@@ -14,7 +15,7 @@ describe('EnterAction', () => {
   });
 
   it('should push result onto stack', () => {
-    context = new CalculatorContext('19', stack);
+    context = new CalculatorContextBuilder().setResult('19').setStack(stack).build();
 
     action.execute(context);
 
@@ -22,7 +23,7 @@ describe('EnterAction', () => {
   });
 
   it('should have reset', () => {
-    context = new CalculatorContext('', stack);
+    context = new CalculatorContextBuilder().setStack(stack).build();
 
     const actionResult = action.execute(context);
 

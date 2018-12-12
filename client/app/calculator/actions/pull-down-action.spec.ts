@@ -2,6 +2,7 @@ import { PullDownAction } from './pull-down-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('PullDownAction', () => {
   let action: CalculatorAction;
@@ -19,7 +20,10 @@ describe('PullDownAction', () => {
     const expectedSecondOperand = <Operand>{ value: '20' };
     stack.push(expectedSecondOperand);
     stack.push(<Operand>{ value: expectedResult });
-    context = new CalculatorContext(expectedFirstOperand.value, stack);
+    context = new CalculatorContextBuilder()
+      .setResult(expectedFirstOperand.value)
+      .setStack(stack)
+      .build();
 
     const actionResult = action.execute(context);
 
@@ -33,7 +37,7 @@ describe('PullDownAction', () => {
 
   it('should rotate stack entries down when stack empty', () => {
     const expectedResult = '56';
-    context = new CalculatorContext(expectedResult, stack);
+    context = new CalculatorContextBuilder().setResult(expectedResult).setStack(stack).build();
 
     const actionResult = action.execute(context);
 

@@ -3,13 +3,14 @@ import { MatGridListModule, MatIconModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 
 import { ButtonsComponent } from './buttons.component';
-import { EnterAction } from '../enter-action';
+import { EnterAction } from '../actions/enter-action';
 import { SwapAction } from '../actions/swap-action';
 import { PullDownAction } from '../actions/pull-down-action';
 import { PushUpAction } from '../actions/push-up-action';
 import { DropAction } from '../actions/drop-action';
 import { AllClearAction } from '../actions/all-clear-action';
 import { NegateAction } from '../actions/negate-action';
+import { FractionAction } from '../actions/fraction-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -122,5 +123,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.negate();
+  });
+
+  it('should emit action when fraction clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof FractionAction).toBeTruthy();
+      done();
+    });
+
+    component.fraction();
   });
 });

@@ -1,27 +1,24 @@
-import { PushUpAction } from './push-up-action';
+import { FractionAction } from './fraction-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
 import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
-describe('PushUpAction', () => {
+describe('FractionAction', () => {
   let action: CalculatorAction;
   let context: CalculatorContext;
   let stack: Operand[];
 
   beforeEach(() => {
     stack = [];
-    action = new PushUpAction();
+    action = new FractionAction();
   });
 
-  it('should rotate stack entries up when stack has entries', () => {
-    const expectedResult = '56';
-    const expectedFirstOperand = <Operand>{ value: '19' };
-    const expectedSecondOperand = <Operand>{ value: '20' };
-    stack.push(<Operand>{ value: expectedResult });
-    stack.push(expectedFirstOperand);
+  it('should change result to fraction when whole number', () => {
+    const result = '56';
+    const expectedResult = `${result}.`;
     context = new CalculatorContextBuilder()
-      .setResult(expectedSecondOperand.value)
+      .setResult(result)
       .setStack(stack)
       .build();
 
@@ -30,14 +27,12 @@ describe('PushUpAction', () => {
     expect(actionResult.result).toBe(expectedResult);
     expect(actionResult.reset).toBe(false);
     expect(actionResult.resetResult).toBe(false);
-    expect(context.stack.length).toBe(2);
-    expect(context.stack[0]).toEqual(expectedFirstOperand);
-    expect(context.stack[1]).toEqual(expectedSecondOperand);
+    expect(context.stack.length).toBe(0);
   });
 
-  it('should rotate stack entries up when stack empty', () => {
-    const expectedResult = '56';
-    context = new CalculatorContextBuilder().setResult(expectedResult).setStack(stack).build();
+  it('should do nothing to result when already fraction', () => {
+    const expectedResult = '56.43';
+    context = new CalculatorContext(expectedResult, stack);
 
     const actionResult = action.execute(context);
 

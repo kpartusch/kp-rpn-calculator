@@ -2,6 +2,7 @@ import { DropAction } from './drop-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('DropAction', () => {
   let action: CalculatorAction;
@@ -17,7 +18,7 @@ describe('DropAction', () => {
     const currentResult = '56';
     const firstOperand = <Operand>{ value: '20' };
     stack.push(firstOperand);
-    context = new CalculatorContext(currentResult, stack);
+    context = new CalculatorContextBuilder().setResult(currentResult).setStack(stack).build();
 
     const actionResult = action.execute(context);
 
@@ -28,7 +29,7 @@ describe('DropAction', () => {
   });
 
   it('should reset result to default when stack empty', () => {
-    context = new CalculatorContext('56', stack);
+    context = new CalculatorContextBuilder().setResult('56').setStack(stack).build();
 
     const actionResult = action.execute(context);
 

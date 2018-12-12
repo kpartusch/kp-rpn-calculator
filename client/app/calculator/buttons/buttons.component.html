@@ -65,7 +65,7 @@
     <button class="calc-button action" (click)="operand('0')" mat-button type="button">0</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button action" mat-button type="button">.</button>
+    <button class="calc-button action" (click)="fraction()" mat-button type="button">.</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button primary" (click)="enter()" mat-button type="button">enter</button>

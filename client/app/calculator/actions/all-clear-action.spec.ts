@@ -2,6 +2,7 @@ import { AllClearAction } from './all-clear-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('AllClearAction', () => {
   let action: CalculatorAction;
@@ -17,7 +18,7 @@ describe('AllClearAction', () => {
     const defaultResult = '0';
     const firstOperand = <Operand>{ value: '20' };
     stack.push(firstOperand);
-    context = new CalculatorContext(defaultResult, stack);
+    context = new CalculatorContextBuilder().setResult(defaultResult).setStack(stack).build();
 
     const actionResult = action.execute(context);
 
@@ -31,7 +32,7 @@ describe('AllClearAction', () => {
     const defaultResult = '0';
     const firstOperand = <Operand>{ value: '20' };
     stack.push(firstOperand);
-    context = new CalculatorContext('56', stack);
+    context = new CalculatorContextBuilder().setResult('56').setStack(stack).build();
 
     const actionResult = action.execute(context);
 

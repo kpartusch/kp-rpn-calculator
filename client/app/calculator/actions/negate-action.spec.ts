@@ -2,6 +2,7 @@ import { NegateAction } from './negate-action';
 import { CalculatorAction } from '../models/calculator-action';
 import { CalculatorContext } from '../models/calculator-context';
 import { Operand } from '../models/operand';
+import { CalculatorContextBuilder } from '../models/calculator-context.builder';
 
 describe('NegateAction', () => {
   let action: CalculatorAction;
@@ -15,7 +16,10 @@ describe('NegateAction', () => {
 
   it('should negate result when result positive', () => {
     const expectedResult = -56;
-    context = new CalculatorContext((expectedResult * -1).toString(), stack);
+    context = new CalculatorContextBuilder()
+      .setResult((expectedResult * -1).toString())
+      .setStack(stack)
+      .build();
 
     const actionResult = action.execute(context);
 
@@ -27,7 +31,10 @@ describe('NegateAction', () => {
 
   it('should negate result when result negative', () => {
     const expectedResult = 56;
-    context = new CalculatorContext((expectedResult * -1).toString(), stack);
+    context = new CalculatorContextBuilder()
+      .setResult((expectedResult * -1).toString())
+      .setStack(stack)
+      .build();
 
     const actionResult = action.execute(context);
 
