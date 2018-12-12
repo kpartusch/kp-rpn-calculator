@@ -7,6 +7,7 @@ import { PullDownAction } from '../actions/pull-down-action';
 import { PushUpAction } from '../actions/push-up-action';
 import { DropAction } from '../actions/drop-action';
 import { AllClearAction } from '../actions/all-clear-action';
+import { NegateAction } from '../actions/negate-action';
 
 @Component({
   selector: 'app-calculator-buttons',
@@ -53,5 +54,9 @@ export class ButtonsComponent implements OnInit {
 
   public allClear(): void {
     this.actionEntered.emit(new AllClearAction());
+  }
+
+  public negate(): void {
+    this.actionEntered.emit(new NegateAction());
   }
 }

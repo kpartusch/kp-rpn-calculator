@@ -9,6 +9,7 @@ import { PullDownAction } from '../actions/pull-down-action';
 import { PushUpAction } from '../actions/push-up-action';
 import { DropAction } from '../actions/drop-action';
 import { AllClearAction } from '../actions/all-clear-action';
+import { NegateAction } from '../actions/negate-action';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -112,5 +113,14 @@ describe('ButtonsComponent', () => {
     });
 
     component.allClear();
+  });
+
+  it('should emit action when all clear clicked', (done: DoneFn) => {
+    component.actionEntered.subscribe(action => {
+      expect(action instanceof NegateAction).toBeTruthy();
+      done();
+    });
+
+    component.negate();
   });
 });
