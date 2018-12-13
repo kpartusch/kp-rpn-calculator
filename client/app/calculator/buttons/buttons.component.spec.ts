@@ -11,6 +11,7 @@ import { DropAction } from '../actions/drop-action';
 import { AllClearAction } from '../actions/all-clear-action';
 import { NegateAction } from '../actions/negate-action';
 import { FractionAction } from '../actions/fraction-action';
+import { Operator } from '../models/operator.enum';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -132,5 +133,15 @@ describe('ButtonsComponent', () => {
     });
 
     component.fraction();
+  });
+
+  it('should emit operator when an operator button is clicked', (done: DoneFn) => {
+    const expectedOperator = Operator.Plus;
+    component.operatorEntered.subscribe(operator => {
+      expect(operator).toBe(expectedOperator);
+      done();
+    });
+
+    component.operator(expectedOperator);
   });
 });

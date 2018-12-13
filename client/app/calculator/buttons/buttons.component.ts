@@ -9,6 +9,8 @@ import { DropAction } from '../actions/drop-action';
 import { AllClearAction } from '../actions/all-clear-action';
 import { NegateAction } from '../actions/negate-action';
 import { FractionAction } from '../actions/fraction-action';
+import { Operator } from '../models/operator.enum';
+import { Operators } from '../calculator.component';
 
 @Component({
   selector: 'app-calculator-buttons',
@@ -17,12 +19,15 @@ import { FractionAction } from '../actions/fraction-action';
   encapsulation: ViewEncapsulation.None
 })
 export class ButtonsComponent implements OnInit {
+  private operatorTypes = Operator;
 
   @Input() hasResult: boolean;
 
   @Output() operandEntered = new EventEmitter<string>();
 
   @Output() actionEntered = new EventEmitter<CalculatorAction>();
+
+  @Output() operatorEntered = new EventEmitter<Operator>();
 
   constructor() { }
 
@@ -63,5 +68,9 @@ export class ButtonsComponent implements OnInit {
 
   public fraction(): void {
     this.actionEntered.emit(new FractionAction());
+  }
+
+  public operator(operator: Operators) {
+    this.operatorEntered.emit(operator);
   }
 }

@@ -59,7 +59,7 @@
     <button class="calc-button action" (click)="operand('3')" mat-button type="button">3</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">&#43;</button>
+    <button class="calc-button primary" (click)="operator(operatorTypes.Plus)" mat-button type="button">&#43;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="1">
     <button class="calc-button action" (click)="operand('0')" mat-button type="button">0</button>
