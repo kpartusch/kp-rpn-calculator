@@ -1,5 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
+import SpyObj = jasmine.SpyObj;
 
 import { CalculatorComponent } from './calculator.component';
 import { MockStackComponent } from './stack/mock-stack.component';
@@ -8,6 +10,9 @@ import { CalculatorAction } from './models/calculator-action';
 import { CalculatorContext } from './models/calculator-context';
 import { ProcessActionResult } from './models/process-action-result';
 import { Operand } from './models/operand';
+import { Operator } from './models/operator.enum';
+import { CalculatorService } from '../calculator.service';
+import { EnterAction } from './actions/enter-action';
 
 class TestUpdateResultAction implements CalculatorAction {
   public result: string;
@@ -56,13 +61,18 @@ describe('CalculatorComponent', () => {
   const defaultResultValue = '0';
   let component: CalculatorComponent;
   let fixture: ComponentFixture<CalculatorComponent>;
+  let calculatorServiceSpy: SpyObj<CalculatorService>;
 
   beforeEach(async(() => {
+    calculatorServiceSpy = jasmine.createSpyObj<CalculatorService>('CalculatorService', ['postCalculation']);
     TestBed.configureTestingModule({
       declarations: [
         CalculatorComponent,
         MockStackComponent,
         MockButtonsComponent
+      ],
+      providers: [
+        { provide: CalculatorService, useValue: calculatorServiceSpy }
       ]
     })
     .compileComponents();
@@ -129,7 +139,18 @@ describe('CalculatorComponent', () => {
       expect(component.result).toBe(expectedResult);
     });
 
-    it('should have zero result when one zero operand processed', () => {
+    it('should have result concatenation of operands when second or more zero operands', () => {
+      const firstOperand = '9';
+      const secondOperand = '0';
+      const expectedResult = firstOperand + secondOperand;
+
+      component.processOperand(firstOperand);
+      component.processOperand(secondOperand);
+
+      expect(component.result).toBe(expectedResult);
+    });
+
+    it('should have zero result when one zero operand processed first', () => {
       const expectedResult = '0';
 
       component.processOperand(expectedResult);
@@ -137,7 +158,7 @@ describe('CalculatorComponent', () => {
       expect(component.result).toBe(expectedResult);
     });
 
-    it('should have zero result when more than one zero operand processed', () => {
+    it('should have zero result when more than one zero operand processed first', () => {
       const expectedResult = '0';
 
       component.processOperand(expectedResult);
@@ -231,6 +252,87 @@ describe('CalculatorComponent', () => {
 
       component.processAction(updateActionResult);
       component.processAction(clearActionResult);
+    });
+  });
+
+  describe('processOperator', () => {
+    describe('percent operator received', () => {
+      it('should send result and operator when result and no stack entries', fakeAsync(() => {
+        const operand = '100';
+        const expectedResult = '0.1';
+        const expectedOperator = Operator.Percent;
+        calculatorServiceSpy.postCalculation.and.returnValue(of(+expectedResult));
+        component.processOperand(operand);
+
+        component.processOperator(expectedOperator);
+        tick();
+
+        expect(component.result).toBe(expectedResult);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledTimes(1);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledWith([operand, expectedOperator]);
+      }));
+
+      it('should send first stack entry, result, and operator when stack has entries', fakeAsync(() => {
+        const firstOperand = '200';
+        const secondOperand = '10';
+        const expectedResult = '20';
+        const expectedOperator = Operator.Percent;
+        calculatorServiceSpy.postCalculation.and.returnValue(of(+expectedResult));
+        component.processOperand(firstOperand);
+        component.processAction(new EnterAction());
+        component.processOperand(secondOperand);
+
+        component.processOperator(expectedOperator);
+        tick();
+
+        expect(component.result).toBe(expectedResult);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledTimes(1);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledWith([firstOperand, secondOperand, expectedOperator]);
+      }));
+
+      it('should do nothing when has result is false', () => {
+        component.processOperator(Operator.Percent);
+
+        expect(component.result).toBe('0');
+        expect(calculatorServiceSpy.postCalculation).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('two number operator received', () => {
+      it('should send first stack entry, result, and operator when stack has at least one entry', fakeAsync(() => {
+        const firstOperand = '10';
+        const secondOperand = '10';
+        const expectedResult = '100';
+        const expectedOperator = Operator.Multiply;
+        calculatorServiceSpy.postCalculation.and.returnValue(of(+expectedResult));
+        component.processOperand(firstOperand);
+        component.processAction(new EnterAction());
+        component.processOperand(secondOperand);
+
+        component.processOperator(expectedOperator);
+        tick();
+
+        expect(component.result).toBe(expectedResult);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledTimes(1);
+        expect(calculatorServiceSpy.postCalculation).toHaveBeenCalledWith([firstOperand, secondOperand, expectedOperator]);
+      }));
+
+      it('should do nothing when there is no stack entries and only a result', () => {
+        const operand = '100';
+        component.processOperand(operand);
+
+        component.processOperator(Operator.Minus);
+
+        expect(component.result).toBe(operand);
+        expect(calculatorServiceSpy.postCalculation).not.toHaveBeenCalled();
+      });
+
+      it('should do nothing when there is no stack entries and no result', () => {
+        component.processOperator(Operator.Plus);
+
+        expect(component.result).toBe('0');
+        expect(calculatorServiceSpy.postCalculation).not.toHaveBeenCalled();
+      });
     });
   });
 });
