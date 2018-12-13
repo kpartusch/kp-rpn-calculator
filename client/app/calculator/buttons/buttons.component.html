@@ -20,10 +20,10 @@
     <button class="calc-button secondary" (click)="negate()" mat-button type="button"><sup>&#43;</sup>&#47;<sub>&#8722;</sub></button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button secondary" mat-button type="button">%</button>
+    <button class="calc-button secondary" (click)="operator(operatorTypes.Percent)" mat-button type="button">&#37;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">&#247;</button>
+    <button class="calc-button primary" (click)="operator(operatorTypes.Divide)" mat-button type="button">&#247;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button action" (click)="operand('7')" mat-button type="button">7</button>
@@ -35,7 +35,7 @@
     <button class="calc-button action" (click)="operand('9')" mat-button type="button">9</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">&#215;</button>
+    <button class="calc-button primary" (click)="operator(operatorTypes.Multiply)" mat-button type="button">&#215;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button action" (click)="operand('4')" mat-button type="button">4</button>
@@ -47,7 +47,7 @@
     <button class="calc-button action" (click)="operand('6')" mat-button type="button">6</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button class="calc-button primary" mat-button type="button">&#8722;</button>
+    <button class="calc-button primary" (click)="operator(operatorTypes.Minus)" mat-button type="button">&#8722;</button>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <button class="calc-button action" (click)="operand('1')" mat-button type="button">1</button>
