@@ -1,11 +1,11 @@
 import { Response, Request, NextFunction } from 'express';
 
 /**
- * GET /calculator
- * The calculator will process a payload with an array of strings. The strings can be
+ * POST /calculator
+ * The calculator will accept a payload with an array of strings. The strings can be
  * either operands (numbers) or operators.
  */
-export function getCalculatorResult(req: Request, res: Response) {
+export function postCalculatorResult(req: Request, res: Response) {
   const inputs = <string[]>req.body.inputs;
   const stack: number[] = [];
   inputs.forEach((value) => {

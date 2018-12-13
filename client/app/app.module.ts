@@ -1,5 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule,
   MatCardModule,
@@ -8,11 +10,12 @@ import {
   MatIconModule,
   MatListModule
 } from '@angular/material';
+
 import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { StackComponent } from './calculator/stack/stack.component';
 import { ButtonsComponent } from './calculator/buttons/buttons.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalculatorService } from './calculator.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatCardModule,
     MatDividerModule,
     MatListModule,
@@ -31,7 +35,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatIconModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    CalculatorService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

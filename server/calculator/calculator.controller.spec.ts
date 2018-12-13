@@ -13,7 +13,7 @@ describe('Calculator Controller', () => {
 
   it('should return zero when inputs array is empty', (done) => {
     chai.request(app)
-      .get(endPointUrl)
+      .post(endPointUrl)
       .send({inputs: []})
       .end((err, res) => {
         assertSuccessResponse(res, 0);
@@ -26,7 +26,7 @@ describe('Calculator Controller', () => {
       firstOperand = 3;
       secondOperand = 2;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), secondOperand.toString(), '+']})
         .end((err, res) => {
           assertSuccessResponse(res, firstOperand + secondOperand);
@@ -38,7 +38,7 @@ describe('Calculator Controller', () => {
       firstOperand = 20;
       secondOperand = 9.5;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), secondOperand.toString(), '-']})
         .end((err, res) => {
           assertSuccessResponse(res, firstOperand - secondOperand);
@@ -50,7 +50,7 @@ describe('Calculator Controller', () => {
       firstOperand = 8;
       secondOperand = 20;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), secondOperand.toString(), '*']})
         .end((err, res) => {
           assertSuccessResponse(res, firstOperand * secondOperand);
@@ -62,7 +62,7 @@ describe('Calculator Controller', () => {
       firstOperand = 14;
       secondOperand = 2;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), secondOperand.toString(), '/']})
         .end((err, res) => {
           assertSuccessResponse(res, firstOperand / secondOperand);
@@ -74,7 +74,7 @@ describe('Calculator Controller', () => {
       firstOperand = 3;
       secondOperand = 2;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), '*', secondOperand.toString()]})
         .end((err, res) => {
           res.should.have.status(422);
@@ -91,7 +91,7 @@ describe('Calculator Controller', () => {
       firstOperand = 50;
       secondOperand = 10;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), secondOperand.toString(), '%']})
         .end((err, res) => {
           assertSuccessResponse(res, firstOperand * (secondOperand / 100));
@@ -102,7 +102,7 @@ describe('Calculator Controller', () => {
     it('should calculate a result when one number present', (done) => {
       firstOperand = 50;
       chai.request(app)
-        .get(endPointUrl)
+        .post(endPointUrl)
         .send({inputs: [firstOperand.toString(), '%']})
         .end((err, res) => {
           assertSuccessResponse(res, (firstOperand / 100));
