@@ -21,7 +21,7 @@ export class CalculatorService {
 
   public postCalculation(inputs: string[]): Observable<number> {
     return this.http
-      .post<ApiResult<number>>('http://localhost:3001/api/calculator', {inputs: inputs}, )
+      .post<ApiResult<number>>('/api/calculator', {inputs: inputs}, )
       .pipe(
         map((response: ApiResult<number>) => {
           return response.data;

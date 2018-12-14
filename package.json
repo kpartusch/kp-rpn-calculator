@@ -1,6 +1,10 @@
 {
   "name": "kp-rpn-calculator",
   "version": "0.0.0",
+  "engines": {
+    "node": "8.11.x"
+  },
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "node dist/server/app.js",
@@ -11,7 +15,7 @@
     "test-server": "tsc -p server && mocha dist/server/**/*.spec.js --exit",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-path dist"
+    "postinstall": "tsc -p server && ng build"
   },
   "private": true,
   "dependencies": {
