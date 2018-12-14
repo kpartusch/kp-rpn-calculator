@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - '8'
+before_install:
+  - npm install -g @angular/cli
+install: npm install
+branches:
+  only:
+    - master
+deploy:
+  provider: heroku
+  api_key:
+    secure: "w1LRoHxZPrDstIrbyMHVK0fIdQ8Ly34ifN1eUfrf/7lnHSVj7dEBuTKGNW2VhUjlzoy1/BGyb1RPZqtPxo2kTEYiubqpxujHhgxWouOsMqtXfEznx5peh/SoGfHD3tn4ewSNw4vUSMyTwo6HhHlpHgspbL320e+J0BNqzjX99tkMm+ZHuxxzJbWAgVZs8FwQAPxQKWlzo5DPZSqPVFk+RDIHVxE33VlsNL6gjZaWlsb33rD5Y5ekIFhWibMfaePUQGaqGczIMqNvsBccGbodVpj75W7s5TPvf//onopLF58/D2e6XGIMGiE7+DWG+JOvlON81lXpdACSNw15bLZeJcc+GqlT2y81JKpfDvZaA6i2VBta3PgqQdwop5T6QXqID2sXjwo5ROsAmzSf0TxN3NGe68zM58h5PFEdSCaa+22ZaYa08V36HaPyN6K8UgNZm2QyM6LGu6fwRp/h3FkbboYGm2KEHFC/UuI2aqmN/qjIFAir+HIeywtjiK7tn7dFQL35A9/VYsjJSXxFpJD52xO5sYSKCdjKEbUqCtoqj+hqk+f3QUoWKVmiQgxG7pD1krF4ZuKSJBRCH4/yqTh0j6ASz5pVTXURX32ahR/fVDdcq7iAh1UkrfsABE8+o9A1Hbw3IVzscz1oeUv+dyzo8zV84GkTz3tXELttPelEgoc="
+  app: dry-ravine-96794
+
