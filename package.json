@@ -10,7 +10,8 @@
     "test": "ng test",
     "test-server": "tsc -p server && mocha dist/server/**/*.spec.js --exit",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --output-path dist"
   },
   "private": true,
   "dependencies": {
