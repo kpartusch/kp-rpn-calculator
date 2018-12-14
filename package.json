@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start-server": "node dist/server/app.js",
+    "start": "node dist/server/app.js",
+    "start-client": "ng serve",
     "predev": "tsc -p server",
     "build": "ng build",
     "test": "ng test",
