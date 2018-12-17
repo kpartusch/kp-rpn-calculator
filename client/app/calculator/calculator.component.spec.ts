@@ -88,84 +88,115 @@ describe('CalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('hasResult', () => {
-    it('should be true when one or more operands processed', () => {
-      const operand = '9';
+  describe('processOperand', () => {
+    describe('hasResult', () => {
+      it('should be true when one or more operands processed', () => {
+        const operand = '9';
 
-      component.processOperand(operand);
+        component.processOperand(operand);
 
-      expect(component.hasResult).toBeTruthy();
+        expect(component.hasResult).toBeTruthy();
+      });
+
+      it('should be false when no operands processed', () => {
+        expect(component.hasResult).toBeFalsy();
+      });
+
+      it('should be false when zero operand processed', () => {
+        const operand = '0';
+
+        component.processOperand(operand);
+
+        expect(component.hasResult).toBeFalsy();
+      });
+
+      it('should be false when multiple zero operands processed', () => {
+        const operand = '0';
+
+        component.processOperand(operand);
+        component.processOperand(operand);
+
+        expect(component.hasResult).toBeFalsy();
+      });
     });
 
-    it('should be false when no operands processed', () => {
-      expect(component.hasResult).toBeFalsy();
+    describe('result', () => {
+      it('should have result equal to operand when first operand processed', () => {
+        const expectedResult = '9';
+
+        component.processOperand(expectedResult);
+
+        expect(component.result).toBe(expectedResult);
+      });
+
+      it('should have result concatenation of operands when second or more operand', () => {
+        const firstOperand = '9';
+        const secondOperand = '8';
+        const expectedResult = firstOperand + secondOperand;
+
+        component.processOperand(firstOperand);
+        component.processOperand(secondOperand);
+
+        expect(component.result).toBe(expectedResult);
+      });
+
+      it('should have result concatenation of operands when second or more zero operands', () => {
+        const firstOperand = '9';
+        const secondOperand = '0';
+        const expectedResult = firstOperand + secondOperand;
+
+        component.processOperand(firstOperand);
+        component.processOperand(secondOperand);
+
+        expect(component.result).toBe(expectedResult);
+      });
+
+      it('should have zero result when one zero operand processed first', () => {
+        const expectedResult = '0';
+
+        component.processOperand(expectedResult);
+
+        expect(component.result).toBe(expectedResult);
+      });
+
+      it('should have zero result when more than one zero operand processed first', () => {
+        const expectedResult = '0';
+
+        component.processOperand(expectedResult);
+        component.processOperand(expectedResult);
+
+        expect(component.result).toBe(expectedResult);
+      });
     });
 
-    it('should be false when zero operand processed', () => {
-      const operand = '0';
-
-      component.processOperand(operand);
-
-      expect(component.hasResult).toBeFalsy();
-    });
-
-    it('should be false when multiple zero operands processed', () => {
-      const operand = '0';
-
-      component.processOperand(operand);
-      component.processOperand(operand);
-
-      expect(component.hasResult).toBeFalsy();
-    });
-  });
-
-  describe('result', () => {
-    it('should have result equal to operand when first operand processed', () => {
-      const expectedResult = '9';
-
-      component.processOperand(expectedResult);
-
-      expect(component.result).toBe(expectedResult);
-    });
-
-    it('should have result concatenation of operands when second or more operand', () => {
-      const firstOperand = '9';
-      const secondOperand = '8';
-      const expectedResult = firstOperand + secondOperand;
-
+    it('should move result to stack when entering an operand after an operator was processed', fakeAsync(() => {
+      const firstOperand = '200';
+      const secondOperand = '10';
+      const thirdOperand = '5';
+      const calculationResult = '20';
+      const operator = Operator.Percent;
+      let localStack: Operand[];
+      component.stack$.subscribe(stack => {
+        localStack = stack;
+      });
+      calculatorServiceSpy.postCalculation.and.returnValue(of(+calculationResult));
       component.processOperand(firstOperand);
+      component.processAction(new EnterAction());
       component.processOperand(secondOperand);
 
-      expect(component.result).toBe(expectedResult);
-    });
+      component.processOperator(operator);
+      tick();
 
-    it('should have result concatenation of operands when second or more zero operands', () => {
-      const firstOperand = '9';
-      const secondOperand = '0';
-      const expectedResult = firstOperand + secondOperand;
+      expect(localStack.length).toBe(1);
 
-      component.processOperand(firstOperand);
-      component.processOperand(secondOperand);
+      component.processOperand(thirdOperand);
+      tick();
 
-      expect(component.result).toBe(expectedResult);
-    });
-
-    it('should have zero result when one zero operand processed first', () => {
-      const expectedResult = '0';
-
-      component.processOperand(expectedResult);
-
-      expect(component.result).toBe(expectedResult);
-    });
-
-    it('should have zero result when more than one zero operand processed first', () => {
-      const expectedResult = '0';
-
-      component.processOperand(expectedResult);
-      component.processOperand(expectedResult);
-
-      expect(component.result).toBe(expectedResult);
-    });
+      expect(localStack.length).toBe(2);
+      expect(localStack[0]).toEqual(<Operand>{value: firstOperand});
+      expect(localStack[1]).toEqual(<Operand>{value: calculationResult});
+      expect(component.result).toBe(thirdOperand);
+    }));
   });
 
   describe('processAction', () => {

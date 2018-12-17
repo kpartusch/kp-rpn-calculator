@@ -16,15 +16,16 @@ type TwoNumberOperators = Operator.Plus | Operator.Minus | Operator.Multiply | O
   styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent implements OnInit {
-  private isFirstOperand = true;
-  private operandStack: BehaviorSubject<Operand[]> = new BehaviorSubject<Operand[]>([]);
+  private _isFirstOperand = true;
+  private _isFirstOperandAfterOperator = false;
+  private _operandStack: BehaviorSubject<Operand[]> = new BehaviorSubject<Operand[]>([]);
 
   public get result(): string {
     return this._result;
   }
   private _result = '0';
 
-  public stack$: Observable<Operand[]> = this.operandStack.asObservable();
+  public stack$: Observable<Operand[]> = this._operandStack.asObservable();
 
   public get hasResult(): boolean {
     return +this._result !== 0;
@@ -36,13 +37,20 @@ export class CalculatorComponent implements OnInit {
   }
 
   public processOperand(value: string): void {
-    if (value === '0' && this.isFirstOperand) {
+    if (value === '0' && this._isFirstOperand) {
       return;
     }
 
-    if (this.isFirstOperand) {
+    if (this._isFirstOperandAfterOperator) {
+      this._operandStack.getValue().push(<Operand>{value: this._result});
       this._result = value;
-      this.isFirstOperand = false;
+      this._isFirstOperandAfterOperator = false;
+      return;
+    }
+
+    if (this._isFirstOperand) {
+      this._result = value;
+      this._isFirstOperand = false;
       return;
     }
 
@@ -50,17 +58,17 @@ export class CalculatorComponent implements OnInit {
   }
 
   public processAction(action: CalculatorAction): void {
-    const context = new CalculatorContext(this._result, Object.assign([], this.operandStack.getValue()));
+    const context = new CalculatorContext(this._result, Object.assign([], this._operandStack.getValue()));
     const actionResult = action.execute(context);
 
-    this.operandStack.next(Object.assign([], context.stack));
+    this._operandStack.next(Object.assign([], context.stack));
 
     if (actionResult.result) {
       this._result = actionResult.result;
     }
 
     if (actionResult.reset) {
-      this.resetResult(actionResult.resetResult);
+      this._resetResult(actionResult.resetResult);
     }
   }
 
@@ -74,7 +82,7 @@ export class CalculatorComponent implements OnInit {
     }
 
     const inputs = [];
-    const stack = this.operandStack.getValue();
+    const stack = this._operandStack.getValue();
     if (stack.length > 0) {
       inputs.push(stack[stack.length - 1].value);
     }
@@ -84,7 +92,7 @@ export class CalculatorComponent implements OnInit {
   }
 
   private _processTwoNumberOperator(operator: TwoNumberOperators): void {
-    const stack = this.operandStack.getValue();
+    const stack = this._operandStack.getValue();
     if (stack.length < 1) {
       return;
     }
@@ -102,13 +110,15 @@ export class CalculatorComponent implements OnInit {
       .subscribe(result => {
         this._result = result.toString();
       });
+    this._isFirstOperandAfterOperator = true;
   }
 
-  private resetResult(resetResultValue: boolean = true) {
+  private _resetResult(resetResultValue: boolean = true) {
     if (resetResultValue) {
       this._result = '0';
     }
-    this.isFirstOperand = true;
+    this._isFirstOperand = true;
+    this._isFirstOperandAfterOperator = false;
   }
 
 }
