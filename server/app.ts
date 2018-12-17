@@ -4,6 +4,7 @@ import * as path from 'path';
 
 import { postCalculatorResult } from './calculator/calculator.controller';
 import { validateGetCalculatorResult } from './calculator/calculator.validation';
+import { home, notFound } from './calculator/catch-all.controller';
 
 const app = express();
 dotenv.load({ path: '.env' });
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 
 const router = express.Router();
 router.route('/calculation').post(validateGetCalculatorResult(), postCalculatorResult);
+router.route('/').get(home);
+router.route('*').all(notFound);
 app.use('/api', router);
 
 app.get('/*', function(req, res) {
