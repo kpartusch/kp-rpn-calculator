@@ -40,7 +40,7 @@ describe('CalculatorService', () => {
         ()  => fail('expected result not an error')
       );
 
-    const postUrl = '/api/calculator';
+    const postUrl = '/api/calculation';
     const request = httpTestingController.expectOne(postUrl);
 
     expect(request.request.method).toBe('POST');
@@ -58,7 +58,7 @@ describe('CalculatorService', () => {
       }
     );
 
-    const postUrl = '/api/calculator';
+    const postUrl = '/api/calculation';
     const request = httpTestingController.expectOne(postUrl);
 
     expect(request.request.method).toBe('POST');

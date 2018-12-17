@@ -1,8 +1,8 @@
 import { Response, Request, NextFunction } from 'express';
 
 /**
- * POST /calculator
- * The calculator will accept a payload with an array of strings. The strings can be
+ * POST /calculation
+ * The calculator API will accept a payload with an array of strings. The strings can be
  * either operands (numbers) or operators.
  */
 export function postCalculatorResult(req: Request, res: Response) {

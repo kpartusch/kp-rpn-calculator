@@ -9,7 +9,7 @@ chai.use(require('chai-http')).should();
 describe('Calculator Controller', () => {
   let firstOperand: number;
   let secondOperand: number;
-  const endPointUrl = '/api/calculator';
+  const endPointUrl = '/api/calculation';
 
   it('should return zero when inputs array is empty', (done) => {
     chai.request(app)

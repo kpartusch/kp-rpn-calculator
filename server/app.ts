@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const router = express.Router();
-router.route('/calculator').post(validateGetCalculatorResult(), postCalculatorResult);
+router.route('/calculation').post(validateGetCalculatorResult(), postCalculatorResult);
 app.use('/api', router);
 
 app.get('/*', function(req, res) {
