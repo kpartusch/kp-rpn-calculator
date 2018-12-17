@@ -19,7 +19,7 @@ import { Operators } from '../calculator.component';
   encapsulation: ViewEncapsulation.None
 })
 export class ButtonsComponent implements OnInit {
-  private operatorTypes = Operator;
+  public operatorTypes = Operator;
 
   @Input() hasResult: boolean;
 

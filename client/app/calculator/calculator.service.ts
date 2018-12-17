@@ -26,11 +26,11 @@ export class CalculatorService {
         map((response: ApiResult<number>) => {
           return response.data;
         }),
-        catchError(err => this.handleError(err))
+        catchError(err => this._handleError(err))
       );
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private _handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
