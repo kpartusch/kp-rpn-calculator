@@ -11,7 +11,7 @@ import { CalculatorContext } from './models/calculator-context';
 import { ProcessActionResult } from './models/process-action-result';
 import { Operand } from './models/operand';
 import { Operator } from './models/operator.enum';
-import { CalculatorService } from '../calculator.service';
+import { CalculatorService } from './calculator.service';
 import { EnterAction } from './actions/enter-action';
 
 class TestUpdateResultAction implements CalculatorAction {

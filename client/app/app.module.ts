@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { StackComponent } from './calculator/stack/stack.component';
 import { ButtonsComponent } from './calculator/buttons/buttons.component';
-import { CalculatorService } from './calculator.service';
+import { CalculatorService } from './calculator/calculator.service';
 
 @NgModule({
   declarations: [

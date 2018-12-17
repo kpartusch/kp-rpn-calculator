@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Operand } from './models/operand';
 import { CalculatorContext } from './models/calculator-context';
 import { CalculatorAction } from './models/calculator-action';
-import { CalculatorService } from '../calculator.service';
+import { CalculatorService } from './calculator.service';
 import { Operator } from './models/operator.enum';
 
 export type Operators = Operator.Plus | Operator.Minus | Operator.Multiply | Operator.Divide | Operator.Percent;
