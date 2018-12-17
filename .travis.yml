@@ -20,6 +20,7 @@ install:
 
 script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  - npm run test-server
 
 branches:
   only:

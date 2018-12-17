@@ -1,0 +1,19 @@
+Design Choices for the RPN Calculator
+
+/* The rationale for your design choices is described in a text file saved in version control as part of your project. */
+General
+- I chose to use Angular for the front end and Express for the API to keep the project simple. This will allow for one
+platform, node, to be used for the entire project and its dependencies.
+
+Back End
+- Used express-validator to separate payload validation from controller logic
+Front End
+- I chose to use Angular Material for the style framework. It is built to be used with Angular and helps provide a
+consistent and well designed user experience.
+- I chose to separate the functionality of the calculator into operands, operators, and actions. These three categories
+summarized what the calculator needed to accomplish.
+  - Operands alter the value of the active item in the stack.
+  - Operators submit the stack to the API for processing.
+  - Actions alter the stack
+- I chose to create separate methods for the action buttons to keep the action instance creation a responsibility of the
+button component and out of the view.

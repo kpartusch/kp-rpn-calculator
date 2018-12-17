@@ -1,6 +1,6 @@
 {
   "name": "kp-rpn-calculator",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "engines": {
     "node": "8.11.x"
   },
@@ -9,13 +9,14 @@
     "ng": "ng",
     "start": "node dist/server/app.js",
     "start-client": "ng serve",
-    "predev": "tsc -p server",
-    "build": "ng build",
-    "test": "ng test",
-    "test-server": "tsc -p server && mocha dist/server/**/*.spec.js --exit",
+    "build": "tsc -p server",
+    "build-client": "ng build",
+    "dev-build": "npm run build && npm run build-client",
+    "test": "npm run build && mocha dist/server/**/*.spec.js --exit",
+    "test-client": "ng test --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "tsc -p server && ng build"
+    "postinstall": "npm run build && ng build --aot --prod"
   },
   "private": true,
   "dependencies": {
