@@ -19,8 +19,8 @@ install:
   - npm install
 
 script:
-  - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-  - npm run test-server
+  - npm run test-client -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  - npm run test
 
 branches:
   only:
